@@ -2,11 +2,24 @@ name: CI
 
 on:
   push:
+    branches: ["main"]
 
 jobs:
-  hello:
+  test:
+    name: Test Code
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - run: echo "Hello from Github Actions!"
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install runtime
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Install Dependencies
+        run: pip install -r requirments
+
+      - name: Run Tests
+        run: pytest
